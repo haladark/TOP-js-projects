@@ -27,18 +27,20 @@ function game(){
         document.write("Player selection: "+playerSelection+"<br> ");
         document.write("Computer selection: "+computerSelection+"<br>");
         playRound();
-        if (result ==1){
+            if (result ==1){
             document.write ("You win!! " + playerSelection +" beats " + computerSelection+"<br>");
-        }else if (result ==2){ 
+            }else if (result ==2){ 
             document.write ("You lose!! "+computerSelection+" beats " +playerSelection+"<br>");
-        } else if (i<5) {document.write("<br>Tie! play again.<br>");}
-        else document.write("<br>Tie!");
+            } else if (result==0) {
+                if (i<5) {document.write("<br>Tie! play again.<br>");}
+                 else document.write("<br>Tie!");
+            }
     }
     document.write ("<br><br>End of Game!! <br>")
 }
 
 function playRound() {
-
+    
     if (playerSelection === computerSelection)
        {result=0;}
     else if (playerSelection ==="rock" && computerSelection ==="paper")
@@ -54,7 +56,7 @@ function playRound() {
     else if (playerSelection ==="scissors" && computerSelection ==="paper")
         {result=1;}
     else
-        document.write("<br>Something went wrong!<br>");
+        {document.write("<br>Something went wrong!<br>"); result=3;}
             
     return result;
     
