@@ -1,57 +1,31 @@
-console.log("Start");
+// Need to do: how to stop the game? how to restart that game with click restart button?
+
 let computerSelection, playerSelection='0';
 let result=1;
 let  player=0, computer=0;
 var winner = "it's a tie!";
 
 const container = document.querySelector('.container');
-
-
 var rock= document.querySelector('#rock');
 var paper= document.querySelector('#paper');
 var scissors= document.querySelector('#scissors');
 
-
+var computerChoice= document.createElement('div');
+computerChoice.classList.add('computerChoice');
+var playerChoice = document.createElement('div');
+playerChoice.classList.add('playerChoice');
 var gameResult= document.createElement('div');
-
-
-//for(let i=0;i<10;i++){
-    game();
-
-
-    //}
-
 gameResult.classList.add('gameResult');
-gameResult.textContent=`In this round ${winner}`;
-container.appendChild(gameResult);
+
+game();
 
 
-function computerPlay(){
-    let selectOption=["rock", "paper","scissors"];
-    let arrayRandom= Math.floor(Math.random() * 3);
-    computerSelection= selectOption[arrayRandom];
-    return computerSelection;
-    
-}
 
-function game(){
-
-
-    rock.addEventListener('click',function(){playerSelection='rock'; playRound()});
-    paper.addEventListener('click',function(){playerSelection='paper';playRound()});
-    scissors.addEventListener('click',function(){playerSelection='scissors';playRound()});
-}
 
 function playRound() {
     computerSelection=computerPlay();
-
-    var computerChoice= document.createElement('div');
-    computerChoice.classList.add('computerChoice');
     computerChoice.textContent = `Computer Selected: ${computerSelection}`;
     container.appendChild(computerChoice);
-
-    var playerChoice = document.createElement('div');
-    playerChoice.classList.add('playerChoice');
     playerChoice.textContent = `You selected: ${playerSelection}`;
     container.appendChild(playerChoice);
 
@@ -81,5 +55,30 @@ function playRound() {
     }else {
         winner='you lost the game!';
         console.log("you lost the game!");}
-    }else return;
+
+        gameResult.textContent=`In this round ${winner}`;
+        container.appendChild(gameResult);
+        player=0;computer=0;
+        return;
+
+
+        //return winner; // should break!!
+    }//else return null;
+    return;
+ 
+}
+function computerPlay(){
+    let selectOption=["rock", "paper","scissors"];
+    let arrayRandom= Math.floor(Math.random() * 3);
+    computerSelection= selectOption[arrayRandom];
+    return computerSelection;
+    
+}
+function game(){
+
+    rock.addEventListener('click',function(){playerSelection='rock'; playRound()});
+    paper.addEventListener('click',function(){playerSelection='paper';playRound()});
+    scissors.addEventListener('click',function(){playerSelection='scissors';playRound()});
+
+
 }
