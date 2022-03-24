@@ -1,13 +1,29 @@
 console.log("Start");
-
-
-let computerSelection, playerSelection;
+let computerSelection, playerSelection='0';
 let result=1;
+let  player=0, computer=0;
+var winner = "it's a tie!";
+
+const container = document.querySelector('.container');
 
 
-game();
+var rock= document.querySelector('#rock');
+var paper= document.querySelector('#paper');
+var scissors= document.querySelector('#scissors');
 
 
+var gameResult= document.createElement('div');
+
+
+//for(let i=0;i<10;i++){
+    game();
+
+
+    //}
+
+gameResult.classList.add('gameResult');
+gameResult.textContent=`In this round ${winner}`;
+container.appendChild(gameResult);
 
 
 function computerPlay(){
@@ -19,45 +35,51 @@ function computerPlay(){
 }
 
 function game(){
-    for (let i=1;i<=5;i++) {
-        document.write(`<br><br><br>Round ${i} .. <br>`);
-        playerSelection=prompt("Enter your selection.", " ");
-        playerSelection=playerSelection.toLowerCase();
-        computerSelection=computerPlay();
-        document.write("Player selection: "+playerSelection+"<br> ");
-        document.write("Computer selection: "+computerSelection+"<br>");
-        playRound();
-            if (result ==1){
-            document.write ("You win!! " + playerSelection +" beats " + computerSelection+"<br>");
-            }else if (result ==2){ 
-            document.write ("You lose!! "+computerSelection+" beats " +playerSelection+"<br>");
-            } else if (result==0) {
-                if (i<5) {document.write("<br>Tie! play again.<br>");}
-                 else document.write("<br>Tie!");
-            }
-    }
-    document.write ("<br><br>End of Game!! <br>")
+
+
+    rock.addEventListener('click',function(){playerSelection='rock'; playRound()});
+    paper.addEventListener('click',function(){playerSelection='paper';playRound()});
+    scissors.addEventListener('click',function(){playerSelection='scissors';playRound()});
 }
 
 function playRound() {
-    
+    computerSelection=computerPlay();
+
+    var computerChoice= document.createElement('div');
+    computerChoice.classList.add('computerChoice');
+    computerChoice.textContent = `Computer Selected: ${computerSelection}`;
+    container.appendChild(computerChoice);
+
+    var playerChoice = document.createElement('div');
+    playerChoice.classList.add('playerChoice');
+    playerChoice.textContent = `You selected: ${playerSelection}`;
+    container.appendChild(playerChoice);
+
     if (playerSelection === computerSelection)
-       {result=0;}
+       {result=0; console.log('tie!!');}
     else if (playerSelection ==="rock" && computerSelection ==="paper")
-        {result=2;}
+        {result=2; computer++;}
     else if (playerSelection ==="rock" && computerSelection ==="scissors")
-        {result=1;}
+        {result=1; player++;}
     else if (playerSelection ==="paper" && computerSelection ==="rock")
-        {result=1;}
+        {result=1;player++;}
     else if (playerSelection ==="paper" && computerSelection ==="scissors")
-        {result=2;}
+        {result=2; computer++;}
     else if (playerSelection ==="scissors" && computerSelection ==="rock")
-        {result=2;}
+        {result=2; computer++;}
     else if (playerSelection ==="scissors" && computerSelection ==="paper")
-        {result=1;}
+        {result=1; player++;}
     else
-        {document.write("<br>Something went wrong!<br>"); result=3;}
-            
-    return result;
-    
+    console.log('some thing is wrong');
+    console.log(player);
+    console.log(computer);
+    if(player>=5||computer>=5){
+
+    if (player>computer){
+        winner='you won the game!';
+        console.log("you won the game!!!!");
+    }else {
+        winner='you lost the game!';
+        console.log("you lost the game!");}
+    }else return;
 }
