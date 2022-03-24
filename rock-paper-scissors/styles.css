@@ -1,0 +1,87 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #ccc;
+    font-size: 24px;
+}
+
+.container {
+
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    align-items: center;
+    margin-top:50px;
+
+
+}
+
+.results{
+    display: grid; /*might use flex instead of grid! shape is not ok*/
+    grid-template-columns:repeat(2,1fr) ;
+    font-size: 2rem;
+    font-weight: bold;
+    color: rgb(52, 15, 87);
+    margin:40px 20px;
+    padding:16px;
+    justify-content: center;
+    justify-items:center;
+    align-items: center;
+
+}
+
+.selections{
+
+    display:flex;
+    justify-content: center;
+    gap: 60px;
+
+}
+.choice{ /*.selection*/
+    background:none;
+    border:none;
+    outline: none;
+    cursor: pointer; 
+    font-size: 5rem;  
+    transition: 100ms;
+    margin-top:40px;
+    padding:16px;
+}
+
+.choice:hover{
+    transform: scale(1.2);
+}
+.text{
+    margin-bottom: 20px;
+}
+
+.result-score{
+
+    margin-left: .1em;
+    color:#333;
+    font-size: 0.8em;
+}
+.game-result {
+
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    color:rgb(14, 9, 83) ;
+    font-weight: 900;
+    font-size: 3rem;
+}
+
+#startBtn{
+background-color: #2bb395;
+color: #fff;
+padding:16px 20px;
+margin:10px 20px;
+text-align:center;
+text-decoration: inline-block;
+font-size: 2rem;
+
+}
+.result-selection {
+    opacity:.5;
+}
+.winner{
+    opacity:1;
+    font-size: 1.1em;
+}

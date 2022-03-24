@@ -1,84 +1,93 @@
-// Need to do: how to stop the game? how to restart that game with click restart button?
+const selectionButtons = document.querySelectorAll('[data-selection]');
+const finalColumn = document.querySelector('[data-final-column]');
+const computerScoreSpan = document.querySelector('[data-computer-score]');
+const yourScoreSpan = document.querySelector('[data-your-score]');
 
-let computerSelection, playerSelection='0';
-let result=1;
-let  player=0, computer=0;
-var winner = "it's a tie!";
+const SELECTIONS = [  //all possible selections
+    {
+        name: 'rock',
+        emoji: '✊',
+        beats: 'scissors',
+    },
+    {
+        name: 'paper',
+        emoji: '🤚',
+        beats: 'rock',
+    },
+    {
+        name: 'scissors',
+        emoji: '✌️',
+        beats: 'paper',
+    }
 
-const container = document.querySelector('.container');
-var rock= document.querySelector('#rock');
-var paper= document.querySelector('#paper');
-var scissors= document.querySelector('#scissors');
-
-var computerChoice= document.createElement('div');
-computerChoice.classList.add('computerChoice');
-var playerChoice = document.createElement('div');
-playerChoice.classList.add('playerChoice');
-var gameResult= document.createElement('div');
-gameResult.classList.add('gameResult');
-
-game();
-
-
-
-
-function playRound() {
-    computerSelection=computerPlay();
-    computerChoice.textContent = `Computer Selected: ${computerSelection}`;
-    container.appendChild(computerChoice);
-    playerChoice.textContent = `You selected: ${playerSelection}`;
-    container.appendChild(playerChoice);
-
-    if (playerSelection === computerSelection)
-       {result=0; console.log('tie!!');}
-    else if (playerSelection ==="rock" && computerSelection ==="paper")
-        {result=2; computer++;}
-    else if (playerSelection ==="rock" && computerSelection ==="scissors")
-        {result=1; player++;}
-    else if (playerSelection ==="paper" && computerSelection ==="rock")
-        {result=1;player++;}
-    else if (playerSelection ==="paper" && computerSelection ==="scissors")
-        {result=2; computer++;}
-    else if (playerSelection ==="scissors" && computerSelection ==="rock")
-        {result=2; computer++;}
-    else if (playerSelection ==="scissors" && computerSelection ==="paper")
-        {result=1; player++;}
-    else
-    console.log('some thing is wrong');
-    console.log(player);
-    console.log(computer);
-    if(player>=5||computer>=5){
-
-    if (player>computer){
-        winner='you won the game!';
-        console.log("you won the game!!!!");
-    }else {
-        winner='you lost the game!';
-        console.log("you lost the game!");}
-
-        gameResult.textContent=`In this round ${winner}`;
-        container.appendChild(gameResult);
-        player=0;computer=0;
-        return;
+]
 
 
-        //return winner; // should break!!
-    }//else return null;
-    return;
- 
-}
-function computerPlay(){
-    let selectOption=["rock", "paper","scissors"];
-    let arrayRandom= Math.floor(Math.random() * 3);
-    computerSelection= selectOption[arrayRandom];
-    return computerSelection;
+
+selectionButtons.forEach(selectionButton => {
+    selectionButton.addEventListener('click', e =>{
+        const selectionName = selectionButton.dataset.selection;
+        const selection = SELECTIONS.find(selection => selection.name ===selectionName);
+        makeSelection(selection)
+    })
+})
+
+function makeSelection(selection){
+    computerSelection=randomSelection();
+    const yourWinner = isWinner(selection, computerSelection);
+    const computerWinner = isWinner(computerSelection, selection);
     
+    addSelectionResult(computerSelection, computerWinner);
+    addSelectionResult(selection, yourWinner);
+
+    if  (yourWinner) incrementScore(yourScoreSpan);
+    if (computerWinner) incrementScore(computerScoreSpan);
+    var gameWinner = "";//
+    if(yourScoreSpan.innerText ==='5') {
+        gameWinner = "YOU WON!!"
+    };
+    if (computerScoreSpan.innerText === '5') {
+        gameWinner = "YOU LOST!!"
+    };
+    gameResult(gameWinner);
+    /*gameWinner='';
+    yourScoreSpan=0;
+    console.log(yourScoreSpan);*/
 }
-function game(){
-
-    rock.addEventListener('click',function(){playerSelection='rock'; playRound()});
-    paper.addEventListener('click',function(){playerSelection='paper';playRound()});
-    scissors.addEventListener('click',function(){playerSelection='scissors';playRound()});
 
 
+function incrementScore(scoreSpan){
+    scoreSpan.innerText = parseInt(scoreSpan.innerText)+1;
+
+}
+
+function gameResult(resultStr){
+    const finalResult = document.querySelector('[data-game-result]');
+    const div = document.createElement('div');
+    div.classList.add('game-result');
+    div.innerText = (resultStr);
+    finalResult.appendChild(div);
+    
+
+}
+
+function addSelectionResult(selection,winner){
+    const div = document.createElement('div');
+    div.innerText = (selection.emoji);
+    div.classList.add('result-selection');
+    if(winner) div.classList.add('winner');
+    finalColumn.after(div);
+
+}
+
+
+function isWinner(selection,opponentSelection){
+    return selection.beats === opponentSelection.name;
+
+}
+
+function randomSelection () {
+
+    const randomIndex = Math.floor(Math.random()* SELECTIONS.length);
+    return SELECTIONS[randomIndex];
 }
